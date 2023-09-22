@@ -7,25 +7,25 @@ import { resolve } from "path"
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  resolve: {
-    alias: {
-      "@": resolve(__dirname, "src"),
+    resolve: {
+        alias: {
+            "@": resolve(__dirname, "src"),
+        },
+        extensions: [".js", ".json", ".ts"],
     },
-    extensions: [".js", ".json", ".ts"],
-  },
-  plugins: [
-    vue(),
-    Components({
-      resolvers: [
-        AntDesignVueResolver({
-          importStyle: false, // css in js
+    plugins: [
+        vue(),
+        Components({
+            resolvers: [
+                AntDesignVueResolver({
+                    importStyle: false, // css in js
+                }),
+            ],
         }),
-      ],
-    }),
-  ],
-  css: {
-    postcss: {
-      plugins: [tailwindcss],
+    ],
+    css: {
+        postcss: {
+            plugins: [tailwindcss],
+        },
     },
-  },
 })

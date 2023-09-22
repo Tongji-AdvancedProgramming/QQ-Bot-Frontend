@@ -1,4 +1,4 @@
 export default interface QQGroup {
-  id: string
-  note: string
+    id: string
+    note: string
 }
