@@ -5,6 +5,7 @@ import axios from "axios"
 import { Course } from "@/models/quicktype/Course.js"
 import EditGroup from "@/components/course/EditGroup.vue"
 import EditCourse from "@/components/course/EditCourse.vue"
+import SelectGroup from "@/components/course/SelectGroup.vue";
 
 const columns = ref<TableColumnsType>([
   {
@@ -33,6 +34,7 @@ const editGroupOpen = ref(false)
 const editGroupId = ref("")
 const editCourseOpen = ref(false)
 const editCourseId = ref("")
+const linkGroupOpen = ref(false)
 
 const editCourseRecord = ref<Course | null>(null)
 
@@ -42,10 +44,9 @@ const editGroup = (groupId: string, courseId: string) => {
   editGroupOpen.value = true
 }
 
-const addGroup = (courseId: string) => {
-  editGroupId.value = ""
-  editCourseId.value = courseId
-  editGroupOpen.value = true
+const addGroup = (record: Course) => {
+  currentCourse.value = record
+  linkGroupOpen.value = true
 }
 
 const editCourse = (record: Course) => {
@@ -128,6 +129,8 @@ const deleteCourse = (record: Course) => {
   })
 }
 
+const currentCourse = ref<Course|null>(null)
+
 onMounted(() => {
   refresh()
 })
@@ -157,7 +160,7 @@ onMounted(() => {
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'groups'">
             <a-tag v-for="g in record.groups" @click="editGroup(g, record.id)" style="cursor: pointer">{{ g }}</a-tag>
-            <a-tag @click="addGroup(record.id)" style="cursor: pointer">添加</a-tag>
+            <a-tag @click="addGroup(record)" style="cursor: pointer">添加</a-tag>
           </template>
           <template v-else-if="column.key === 'actions'">
             <a-space>
@@ -175,6 +178,7 @@ onMounted(() => {
   <a-modal v-model:open="editCourseOpen" title="编辑或新建课程" @ok="submitEditCourse" destroyOnClose>
     <EditCourse ref="editCourseDialog" :course-id="editCourseId" :course-record="editCourseRecord!" @ok="editCourseFinish" />
   </a-modal>
+  <SelectGroup v-model:open="linkGroupOpen" :course="currentCourse"/>
 </template>
 
 <style scoped></style>

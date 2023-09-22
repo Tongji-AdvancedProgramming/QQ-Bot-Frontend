@@ -35,6 +35,7 @@ declare module 'vue' {
     Login: typeof import('./src/components/Login.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SelectGroup: typeof import('./src/components/course/SelectGroup.vue')['default']
     StudentManage: typeof import('./src/components/student/StudentManage.vue')['default']
   }
 }
